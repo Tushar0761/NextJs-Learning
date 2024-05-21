@@ -3,7 +3,7 @@ import Link from "next/link";
 import data from "./data";
 import { Result } from "postcss";
 
-export async function getStaticProps(query) {
+export async function getStaticProps() {
     let res = data.map((d) => d.name);
     console.log("in server");
     return { props: { result: res } };

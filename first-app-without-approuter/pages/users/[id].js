@@ -1,13 +1,11 @@
-import { useRouter } from "next/router";
-import { userAgentFromString } from "next/server";
-import data from "./data";
-
 export async function getServerSideProps(query) {
     let id = Number(query.params.id);
 
     if (isNaN(id)) {
         return <div>Wrong Id</div>;
     }
+    let res = await fetch("");
+
     let user = data.find((user) => user.id == id);
     return { props: { data: user } };
 }
