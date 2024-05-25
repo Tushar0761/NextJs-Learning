@@ -1,7 +1,21 @@
-export default function Page({ params, categories }) {
+import { useRouter } from "next/router";
+
+import { useEffect, useState } from "react";
+
+export default function Page() {
+    const router = useRouter();
+    useEffect(() => {
+        if (router.isReady) {
+            let currentCategories = router.query;
+            console.log(currentCategories);
+        }
+        console.log("ok");
+    }, [router.isReady, router.query]);
+    const [categories, setCategories] = useState([]);
+
     return (
         <>
-            <div>This is default : {params.category}</div>
+            <div>This is default : {"no category"}</div>
             <div>
                 rest :{" "}
                 {categories.map((c) => (
@@ -10,21 +24,4 @@ export default function Page({ params, categories }) {
             </div>
         </>
     );
-}
-export async function getStaticPath() {
-    return {
-        paths: [
-            { params: { path: "electronics " } },
-            { params: { path: "jewelery" } },
-        ],
-        fallback: true,
-    };
-}
-export async function getStaticProps({ params }) {
-    const res = await fetch("https://fakestoreapi.com/products/categories");
-    const categories = await res.json();
-
-    console.log(categories);
-
-    return { props: { categories, params } };
 }
